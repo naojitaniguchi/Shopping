@@ -25,10 +25,21 @@ public class SpriteDragAndDrop : MonoBehaviour
     public void OnMouseDown()
     {
         isDraging = true;
+        setDragStatusToPlayer(true);
     }
 
     public void OnMouseUp()
     {
         isDraging = false;
+        setDragStatusToPlayer(false);
+    }
+
+    void setDragStatusToPlayer(bool mode)
+    {
+        GameObject playerObject = GameObject.FindGameObjectWithTag("Player");
+        if (playerObject != null)
+        {
+            playerObject.GetComponent<Player>().draging = mode;
+        }
     }
 }

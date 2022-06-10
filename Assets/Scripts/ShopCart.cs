@@ -15,6 +15,7 @@ public class ShopCart : MonoBehaviour
     public float itemElenetYTop;
     public float itemElenetYStep;
     List<GameObject> itemElements;
+    public GameObject notEnoughMoney;
 
     // Start is called before the first frame update
     void Start()
@@ -35,12 +36,20 @@ public class ShopCart : MonoBehaviour
         if (col.gameObject.tag == "Item")
         {
             int index = (int)col.gameObject.GetComponent<ShopItem>().itemType;
-            itemNumbers[index]++;
-            money -= col.gameObject.GetComponent<ShopItem>().price;
-            col.gameObject.GetComponent<ShopItem>().inCart = true;
-            moneyText.GetComponent<TMP_Text>().text = money.ToString();
 
-            addItemElementToCanvas(col.gameObject.GetComponent<ShopItem>().itemType, itemNumbers[index]);
+            if (money < col.gameObject.GetComponent<ShopItem>().price)
+            {
+                notEnoughMoney.SetActive(true);
+            }
+            else
+            {
+                itemNumbers[index]++;
+                money -= col.gameObject.GetComponent<ShopItem>().price;
+                col.gameObject.GetComponent<ShopItem>().inCart = true;
+                moneyText.GetComponent<TMP_Text>().text = money.ToString();
+
+                addItemElementToCanvas(col.gameObject.GetComponent<ShopItem>().itemType, itemNumbers[index]);
+            }
         }
     }
 
@@ -65,5 +74,10 @@ public class ShopCart : MonoBehaviour
             obj.GetComponent<RectTransform>().localPosition = new Vector3(itemElenetX, yPos, 0.0f);
             itemElements.Add(obj);
         }
+    }
+
+    public void showNotEnoughMoney()
+    {
+        notEnoughMoney.SetActive(true);
     }
 }

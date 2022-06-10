@@ -31,9 +31,15 @@ public class ShopItem : MonoBehaviour
     public void OnMouseUp()
     {
         Debug.Log("Mouse Up");
-        if ( inCart)
+
+        GameObject Player = GameObject.FindGameObjectWithTag("Player");
+        if (Player != null)
         {
-            gameObject.SetActive(false);
+            if (inCart)
+            {
+                gameObject.SetActive(false);
+            }
         }
+        
     }
 }
